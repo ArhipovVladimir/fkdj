@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+Реестр
+{% endblock %}
+{% block content %}
+    <table>
+    <tr>
+        <td>Идентификационный номер операции (2)</td>
+        <td>Наименование операции (3)</td>
+        <td>Должности лиц, ответственных за выполнение операции (4)</td>
+        <td>Должности лиц, осуществляющих контрольные действия (5)</td>
+        <td>Контрольное действие (6)</td>
+        <td>Способ осуществления контрольного действия (7)</td>
+    </tr>
+        {% for reest in reestr %}
+    <tr>
+        <td>{{ reest.operation.code_oper }}</td>
+        <td>{{ reest.operation.name }}</td>
+        <td>{{ reest.employ_contr.name }}</td>
+        <td>{{ reest.employ_actint.name }}</td>
+        <td>{{ reest.control_action.name }}</td>
+        <td>{{ reest.method.name }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+<!--    operation = models.ForeignKey(Operation, on_delete=models.PROTECT)-->
+<!--    employ_contr = models.ForeignKey(Employ_position_contr, on_delete=models.PROTECT)-->
+<!--    employ_actint = models.ForeignKey(Employ_position_act, on_delete=models.PROTECT)-->
+<!--    control_action = models.ForeignKey(Control_action, on_delete=models.PROTECT)-->
+<!--    method = models.ForeignKey(Method, on_delete=models.PROTECT)-->
