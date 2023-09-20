@@ -52,26 +52,23 @@ class SertifForn(forms.Form):
                                 widget=forms.DateInput(attrs={'class': 'form-control',
                                                               'type': 'date'}))
 
-    worker = forms.ModelChoiceField(label=' Сотрундик - составитель', queryset=Worker.objects.all(), widget=forms.Textarea(attrs={'class': 'form-control',
-                                                         'placeholder': 'должность сотрудника кто составляет справку'}))
+    worker = forms.ModelChoiceField(label=' Сотрундик - составитель', queryset=Worker.objects.all(),
+                                    # widget=forms.Textarea(attrs={'class': 'form-control',
+                                    #                      'placeholder': 'должность сотрудника кто составляет справку'})
+                                    )
 
 
 class VolitionForm(forms.Form):
     certificate_of_violations = forms.ModelChoiceField(label='процессы', queryset=Certificate_of_violations.objects.all())
-    reestr = forms.ModelChoiceField(label='Операция', queryset=Reestr.objects.all(),
-                                    widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                 'placeholder': ' Операция с нарушением'}))
+    reestr = forms.ModelChoiceField(label='Операция', queryset=Reestr.objects.all()          )
+
 
     title = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': 'Введите имя пользователя'}))
 
-    employ_position_act = forms.ModelChoiceField(label='сотрудник', queryset=Employ_position_act.objects.all(),
-                                    widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                 'placeholder': ' Сутрудник нарушитель'}))
+    employ_position_act = forms.ModelChoiceField(label='сотрудник', queryset=Employ_position_act.objects.all())
 
-    worker_act = forms.ModelChoiceField(label=' Сотрундик -  нарушитель', queryset=Worker.objects.all(),
-                                    widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                 'placeholder': 'должность сотрудника в отношении кого справка'}))
+    worker_act = forms.ModelChoiceField(label=' Сотрундик -  нарушитель', queryset=Worker.objects.all())
 
     amount = forms.FloatField(label='Сумма', widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': 'Сумма нарушения'}))
