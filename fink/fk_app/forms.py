@@ -1,6 +1,6 @@
 from django import forms
 import datetime
-from .models import Process
+from .models import Process, Worker, Reestr, Employ_position_act, Certificate_of_violations
 
 
 class UserForm(forms.Form):
@@ -45,6 +45,50 @@ class OperatinForm(forms.Form):
                            widget=forms.Textarea(attrs={'class': 'form-control',
                                                          'placeholder': 'Введите  наименование операции'}))
     process = forms.ModelChoiceField(label='процессы', queryset=Process.objects.all())
+
+
+class SertifForn(forms.Form):
+    date = forms.DateField(initial=datetime.date.today,
+                                widget=forms.DateInput(attrs={'class': 'form-control',
+                                                              'type': 'date'}))
+
+    worker = forms.ModelChoiceField(label=' Сотрундик - составитель', queryset=Worker.objects.all(), widget=forms.Textarea(attrs={'class': 'form-control',
+                                                         'placeholder': 'должность сотрудника кто составляет справку'}))
+
+
+class VolitionForm(forms.Form):
+    certificate_of_violations = forms.ModelChoiceField(label='процессы', queryset=Certificate_of_violations.objects.all())
+    reestr = forms.ModelChoiceField(label='Операция', queryset=Reestr.objects.all(),
+                                    widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                 'placeholder': ' Операция с нарушением'}))
+
+    title = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'class': 'form-control',
+                                                         'placeholder': 'Введите имя пользователя'}))
+
+    employ_position_act = forms.ModelChoiceField(label='сотрудник', queryset=Employ_position_act.objects.all(),
+                                    widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                 'placeholder': ' Сутрудник нарушитель'}))
+
+    worker_act = forms.ModelChoiceField(label=' Сотрундик -  нарушитель', queryset=Worker.objects.all(),
+                                    widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                 'placeholder': 'должность сотрудника в отношении кого справка'}))
+
+    amount = forms.FloatField(label='Сумма', widget=forms.TextInput(attrs={'class': 'form-control',
+                                                         'placeholder': 'Сумма нарушения'}))
+
+
+# class Certificate_of_violations(models.Model):
+#     date = models.DateField(auto_now_add=True)
+#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
+#
+#
+# class Violation(models.Model):
+#     certificate_of_violations = models.ForeignKey(Certificate_of_violations, on_delete=models.PROTECT)
+#     reestr = models.ForeignKey(Reestr, on_delete=models.PROTECT)
+#     title = models.TextField(max_length=256)
+#     employ_position_contr = models.ForeignKey(Employ_position_contr, on_delete=models.PROTECT)
+#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
+#     amount = models.FloatField(max_length=256)
 
 
 class ManyFieldsFormWidget(forms.Form):

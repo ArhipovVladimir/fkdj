@@ -49,6 +49,14 @@ class Operation(models.Model):
 # )
 
 
+class Employ_position(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'name: {self.name}'
+
+
+
 # долженность работника
 class Employ_position_contr (models.Model):
     name = models.CharField(max_length=100)
@@ -76,8 +84,8 @@ class Employ_position_act (models.Model):
 # работник
 class Worker(models.Model):
     name = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
-    employ_position_contr = models.ForeignKey(Employ_position_contr, on_delete=models.PROTECT)
+    # surname = models.CharField(max_length=100)
+    employ_position = models.ForeignKey(Employ_position, on_delete=models.PROTECT)
 
 
     def __str__(self):
@@ -181,7 +189,7 @@ class Violation(models.Model):
      certificate_of_violations = models.ForeignKey(Certificate_of_violations, on_delete=models.PROTECT)
      reestr = models.ForeignKey(Reestr, on_delete=models.PROTECT)
      title= models.TextField(max_length=256)
-     employ_position_contr = models.ForeignKey(Employ_position_contr, on_delete=models.PROTECT)
+     employ_position_act = models.ForeignKey(Employ_position_act, on_delete=models.PROTECT)
      worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
      amount = models.FloatField(max_length=256)
 
