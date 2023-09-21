@@ -18,7 +18,6 @@ class UserForm(forms.Form):
 
     def clean_email(self):
         email: str = self.cleaned_data['email']
-
         if not (email.endswith('vk.team') or email.endswith('corp.mail.ru')):
             raise forms.ValidationError('Используйте корпоративную почту')
         return email

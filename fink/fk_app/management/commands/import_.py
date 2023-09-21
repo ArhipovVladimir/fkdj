@@ -58,7 +58,7 @@ class Command(BaseCommand):
             for i, row in enumerate(csv_file):
                 if i != 0:
                     set_proc[row[0]] = row[1]
-            print(set_proc)
+            # print(set_proc)
             list_item = []
             for code, name in set_proc.items():
                 list_item.append(Process(code_proc=code, name=name))
