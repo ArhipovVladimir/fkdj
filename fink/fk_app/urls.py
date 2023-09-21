@@ -9,5 +9,7 @@ urlpatterns = [
     path('add_sert/', views.add_sertif, name='add_sertif'),
     path('add_volat/', views.add_violation, name='add_volation'),
     path('reg_volat/', views.reg_violation_jurnal, name='ger_volation_jurnal'),
+    path('get_certif/', views.get_certif_all, name='ger_certif_all'),
+    path('get_one_certif/', views.get_sertif, name='ger_certif'),
     path('reestr/', views.reestr, name='reestr'),
 ]

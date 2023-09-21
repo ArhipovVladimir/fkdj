@@ -20,18 +20,26 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" object-ref="schemas/main/tables/fk_app_violation" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_certificate_of_violations" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_reestr" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_employ_position" active-filter-id="49a94e80-edfa-4e95-80b8-85607fddf464">
       <filter id="49a94e80-edfa-4e95-80b8-85607fddf464" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_journal" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_method" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_operation" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_violation" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_control_action" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_worker" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_employ_position_contr" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_employ_position_act" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -97,13 +105,6 @@
           <max-connection-pool-size value="7" />
           <alternative-statement-delimiter value="" />
         </details>
-        <debugger>
-          <compile-dependencies value="true" />
-          <tcp-driver-tunneling value="false" />
-          <tcp-host-address value="" />
-          <tcp-port-from value="4000" />
-          <tcp-port-to value="4999" />
-        </debugger>
         <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
           <object-type-filter>
             <object-type name="SCHEMA" enabled="true" />
@@ -482,6 +483,7 @@
       </compiler>
       <debugger>
         <debugger-type value="JDBC" />
+        <use-generic-runners value="true" />
       </debugger>
     </operation-settings>
     <ddl-file-settings>

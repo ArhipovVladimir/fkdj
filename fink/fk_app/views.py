@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Process, Operation, Reestr, Certificate_of_violations, Violation, Journal
 # from .models import Process
-from .forms import ProcessForm, OperatinForm, SertifForn, VolitionForm, RegViolationForm
+from .forms import ProcessForm, OperatinForm, SertifForn, VolitionForm, RegViolationForm, VolitionGetForm
 import logging
 from django.core.files.storage import FileSystemStorage
 
@@ -92,7 +92,7 @@ def add_violation(request):
             employ_position_act = form.cleaned_data['employ_position_act']
             amount = form.cleaned_data['amount']
             violation = Violation(certificate_of_violations=cer_vio_select ,reestr=reestr, title=title,
-                                  employ_position_act=employ_position_act, worker_act=worker_act, amount=amount)
+                                  employ_position_act=employ_position_act, worker=worker_act, amount=amount)
             violation.save()
             message = 'Сохранено'
     else:
@@ -126,17 +126,36 @@ def reg_violation_jurnal(request):
                   {'form': form, 'message': message, 'name': name})
 
 
-def get_certif(request):
+def get_certif_all(request):
     violations = Violation.objects.all()
     dict_certif = {}
     for violation in violations:
-        dict_certif.setdefault(violation.certificate_of_violations).append(violation)
+        dict_certif.setdefault(violation.certificate_of_violations, [violation]).append(violation)
 
-    print(dict_certif)
+    # print(dict_certif)
     context = {
         "certifs": dict_certif
     }
     return render(request, "fk_app/certif.html", context)
+
+def get_sertif(request):
+    name = 'отображение справки'
+    if request.method == 'POST':
+        form = VolitionGetForm(request.POST, request.FILES)
+        message = 'Ошибка в данных'
+        if form.is_valid():
+            cer_vio = form.cleaned_data['certificate_of_violations']
+            cer_vio_select = Certificate_of_violations.objects.filter(pk=cer_vio.pk).first()
+            violations = Violation.objects.filter(pk=cer_vio_select).first()
+            # print(cer_vio_select)
+            message = 'Справка'
+    else:
+        form = VolitionGetForm()
+        message = 'Заполните форму'
+
+    return render(request, 'fk_app/certif_one.html',
+                  {'form': form, 'message': message, 'name': name, 'volits':violations})
+
 
 #
 # class Journal(models.Model):

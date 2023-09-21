@@ -111,6 +111,8 @@ class RegViolationForm(forms.Form):
 #     def __str__(self):
 #         return f'date: {self.date}, volation{self.violation} measurse{self.measures}'
 
+class VolitionGetForm(forms.Form):
+    certificate_of_violations = forms.ModelChoiceField(label='Справка', queryset=Certificate_of_violations.objects.all())
 
 
 class ManyFieldsFormWidget(forms.Form):
