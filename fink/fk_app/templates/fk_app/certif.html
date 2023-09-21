@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+Реестр
+{% endblock %}
+{% block content %}
+{% for certif in certifs %}
+    {{ certif }}
+<table>
+    <tr align="center">
+        <td>Идентификационный номер операции (2)</td>
+        <td>Наименование операции (3)</td>
+        <td>Должности лиц, ответственных за выполнение операции (4)</td>
+        <td>Должности лиц, осуществляющих контрольные действия (5)</td>
+        <td>Контрольное действие (6)</td>
+        <td>Способ осуществления контрольного действия (7)</td>
+    </tr>
+        {% for volit in certif %}
+
+    <tr align="center">
+        <td>{{ volit.reestr.code_oper }}</td>
+        <td>{{ volit.title }}</td>
+        <td>{{ volit.employ_position_act.name }}</td>
+        <td>{{ volit.worker.name }}</td>
+        <td>{{ volit.admount }}</td>
+        <td>{{ volit.register }}</td>
+
+
+    </tr>
+    {% endfor %}
+{% endfor %}
+
+</table>
+
+{% endblock %}
+
+<!-- certificate_of_violations = models.ForeignKey(Certificate_of_violations, on_delete=models.PROTECT)-->
+<!--     reestr = models.ForeignKey(Reestr, on_delete=models.PROTECT)-->
+<!--     title= models.TextField(max_length=256)-->
+<!--     employ_position_act = models.ForeignKey(Employ_position_act, on_delete=models.PROTECT)-->
+<!--     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)-->
+<!--     amount = models.FloatField(max_length=256)-->
+<!--     register = models.BooleanField(default=False)-->

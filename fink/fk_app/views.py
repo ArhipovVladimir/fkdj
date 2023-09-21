@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Process, Operation, Reestr, Certificate_of_violations, Violation
+from .models import Process, Operation, Reestr, Certificate_of_violations, Violation, Journal
 # from .models import Process
-from .forms import ProcessForm, OperatinForm, SertifForn, VolitionForm
+from .forms import ProcessForm, OperatinForm, SertifForn, VolitionForm, RegViolationForm
 import logging
 from django.core.files.storage import FileSystemStorage
 
@@ -100,6 +100,55 @@ def add_violation(request):
 
     return render(request, 'fk_app/add_object.html',
                   {'form': form, 'message': message, 'name': name})
+
+
+def reg_violation_jurnal(request):
+    name = 'Регистрация  нарушения в жупнал'
+    if request.method == 'POST':
+        form = RegViolationForm(request.POST)
+        message = 'Ошибка в данных'
+        if form.is_valid():
+            date = form.cleaned_data['date']
+            vio = form.cleaned_data['violations']
+            vio_select = Violation.objects.filter(pk=vio.pk).first()
+            measures = form.cleaned_data['measures']
+            journal = Journal(violation=vio_select, date=date, measures=measures)
+            journal.save()
+            vio_select.register = True
+            vio_select.save()
+            message = 'Сохранено'
+    else:
+        form = RegViolationForm()
+        message = 'Заполните форму'
+
+    return render(request, 'fk_app/add_object.html',
+                  {'form': form, 'message': message, 'name': name})
+
+
+def get_certif(request):
+    violations = Violation.objects.all()
+    dict_certif = {}
+    for violation in violations:
+        dict_certif.setdefault(violation.certificate_of_violations).append(violation)
+
+    print(dict_certif)
+    context = {
+        "certifs": dict_certif
+    }
+    return render(request, "fk_app/certif.html", context)
+
+#
+# class Journal(models.Model):
+#     date = models.DateField(auto_now_add=True)
+#     violation = models.ForeignKey(Violation, on_delete=models.PROTECT)
+#     measures = models.TextField(max_length=256)
+#
+#     def __str__(self):
+#         return f'date: {self.date}, volation{self.violation} measurse{self.measures}'
+
+
+
+
 
 
 

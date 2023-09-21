@@ -20,10 +20,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" object-ref="schemas/main/tables/fk_app_worker" />
-      <object connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" object-ref="schemas/main/tables/fk_app_employ_position" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_reestr" active-filter-id="EMPTY_FILTER" />

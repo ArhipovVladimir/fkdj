@@ -192,6 +192,7 @@ class Violation(models.Model):
      employ_position_act = models.ForeignKey(Employ_position_act, on_delete=models.PROTECT)
      worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
      amount = models.FloatField(max_length=256)
+     register = models.BooleanField(default=False)
 
      def __str__(self):
          return f'cert_viol: {self.certificate_of_violations}, reestre{self.reestr} title {self.title}, worker {self.worker}'

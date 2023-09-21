@@ -1,6 +1,6 @@
 from django import forms
 import datetime
-from .models import Process, Worker, Reestr, Employ_position_act, Certificate_of_violations
+from .models import Process, Worker, Reestr, Employ_position_act, Certificate_of_violations, Violation
 
 
 class UserForm(forms.Form):
@@ -38,15 +38,11 @@ class ProcessForm(forms.Form):
     name = forms.CharField(max_length=120, label='Наименование процесса',
                            widget=forms.Textarea(attrs={'class': 'form-control',
                                                          'placeholder': 'Введите  наименование процесса'}))
-
-
 class OperatinForm(forms.Form):
     name = forms.CharField(max_length=120, label='Наименование операции',
                            widget=forms.Textarea(attrs={'class': 'form-control',
                                                          'placeholder': 'Введите  наименование операции'}))
     process = forms.ModelChoiceField(label='процессы', queryset=Process.objects.all())
-
-
 class SertifForn(forms.Form):
     date = forms.DateField(initial=datetime.date.today,
                                 widget=forms.DateInput(attrs={'class': 'form-control',
@@ -57,8 +53,6 @@ class SertifForn(forms.Form):
                                     # widget=forms.Textarea(attrs={'class': 'form-control',
                                     #                      'placeholder': 'должность сотрудника кто составляет справку'})
                                     )
-
-
 class VolitionForm(forms.Form):
     certificate_of_violations = forms.ModelChoiceField(label='Справка', queryset=Certificate_of_violations.objects.all())
     reestr = forms.ModelChoiceField(label='Операция', queryset=Reestr.objects.all(),
@@ -73,7 +67,7 @@ class VolitionForm(forms.Form):
     #                                                      'placeholder': 'содержание нарушения'}))
 
 
-    worker_act = forms.ModelChoiceField(label=' Сотрундик -  нарушитель', queryset=Worker.objects.all()
+    worker_act = forms.ModelChoiceField(label=' Сотрудник -  нарушитель', queryset=Worker.objects.all()
                                     # ,widget=forms.Textarea(attrs={'class': 'form-control',
                                     #                              'placeholder': 'должность сотрудника в отношении кого справка'})
                                         )
@@ -98,6 +92,25 @@ class VolitionForm(forms.Form):
 #     employ_position_contr = models.ForeignKey(Employ_position_contr, on_delete=models.PROTECT)
 #     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
 #     amount = models.FloatField(max_length=256)
+
+
+class RegViolationForm(forms.Form):
+    date = forms.DateField(initial=datetime.date.today,
+                           widget=forms.DateInput(attrs={'class': 'form-control',
+                                                         'type': 'date'}))
+    violations = forms.ModelChoiceField(label='нарушение', queryset=Violation.objects.filter(register=False))
+    measures = forms.CharField(label='принятые меры', widget=forms.Textarea(attrs={'class': 'form-control',
+                                                 'placeholder': 'принятые меры'}))
+
+
+# class Journal(models.Model):
+#     date = models.DateField(auto_now_add=True)
+#     violation = models.ForeignKey(Violation, on_delete=models.PROTECT)
+#     measures = models.TextField(max_length=256)
+#
+#     def __str__(self):
+#         return f'date: {self.date}, volation{self.violation} measurse{self.measures}'
+
 
 
 class ManyFieldsFormWidget(forms.Form):
@@ -138,9 +151,6 @@ class ProductForm(forms.Form):
     quantity = forms.IntegerField()
     image = forms.ImageField()
 
-
-# class ProductFormUpdate(ProductForm):
-#     products = forms.ModelChoiceField(label='Продукты', queryset=Product.objects.all())
 
 
 
