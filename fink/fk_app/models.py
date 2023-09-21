@@ -53,7 +53,7 @@ class Employ_position(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'name: {self.name}'
+        return f'{self.name}'
 
 
 
@@ -89,7 +89,7 @@ class Worker(models.Model):
 
 
     def __str__(self):
-        return f'name: {self.name}, Emp_posit: {self.employ_position}'
+        return f'{self.employ_position} {self.name}'
 
 # # работник
 # worker = sqlalchemy.Table(
@@ -108,7 +108,7 @@ class Control_action(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'Username: {self.name}'
+        return f'name: {self.name}'
 
 
 # # конрольное действие
@@ -146,7 +146,7 @@ class Certificate_of_violations(models.Model):
 
 
     def __str__(self):
-        return f'Worker: {self.worker}, date {self.date}'
+        return f' справка от {self.date} составил {self.worker}'
 
 
 # # Справка о нарушении
@@ -195,7 +195,7 @@ class Violation(models.Model):
      register = models.BooleanField(default=False)
 
      def __str__(self):
-         return f'cert_viol: {self.certificate_of_violations}, reestre{self.reestr} title {self.title}, worker {self.worker}'
+         return f' {self.amount} {self.title}, worker {self.worker} '
 
 #
 # # Строка в справке о нарушениях
