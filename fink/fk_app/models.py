@@ -10,7 +10,7 @@ from django.db import models
 #     def __str__(self):
 #         return f'Username: {self.name}, email: {self.email}, age:{self.age}'
 
-
+#
 # Процессы
 class Process(models.Model):
     code_proc = models.CharField(max_length=5)

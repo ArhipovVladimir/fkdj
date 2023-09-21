@@ -18,6 +18,7 @@ def reestr(request):
     return render(request, "fk_app/reestr.html", context)
 
 
+
 def add_process(request):
     name = 'Добавление процесса'
     if request.method == 'POST':
