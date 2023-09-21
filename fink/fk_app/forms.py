@@ -50,31 +50,40 @@ class OperatinForm(forms.Form):
 class SertifForn(forms.Form):
     date = forms.DateField(initial=datetime.date.today,
                                 widget=forms.DateInput(attrs={'class': 'form-control',
-                                                              'type': 'date'}))
+                                                              'type': 'date'})
+                           )
 
-    worker = forms.ModelChoiceField(label=' Сотрундик - составитель', queryset=Worker.objects.all(), widget=forms.Textarea(attrs={'class': 'form-control',
-                                                         'placeholder': 'должность сотрудника кто составляет справку'}))
+    worker = forms.ModelChoiceField(label=' Сотрундик - составитель', queryset=Worker.objects.all(),
+                                    # widget=forms.Textarea(attrs={'class': 'form-control',
+                                    #                      'placeholder': 'должность сотрудника кто составляет справку'})
+                                    )
 
 
 class VolitionForm(forms.Form):
-    certificate_of_violations = forms.ModelChoiceField(label='процессы', queryset=Certificate_of_violations.objects.all())
+    certificate_of_violations = forms.ModelChoiceField(label='Справка', queryset=Certificate_of_violations.objects.all())
     reestr = forms.ModelChoiceField(label='Операция', queryset=Reestr.objects.all(),
-                                    widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                 'placeholder': ' Операция с нарушением'}))
+                                    # widget=forms.Textarea(attrs={'class': 'form-control',
+                                    #                              'placeholder': ' Операция с нарушением'})
+                                    )
+    title = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control',
+                                                 'placeholder': 'содержание нарушения'}))
 
-    title = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': 'Введите имя пользователя'}))
 
-    employ_position_act = forms.ModelChoiceField(label='сотрудник', queryset=Employ_position_act.objects.all(),
-                                    widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                 'placeholder': ' Сутрудник нарушитель'}))
+    # title = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'class': 'form-control',
+    #                                                      'placeholder': 'содержание нарушения'}))
 
-    worker_act = forms.ModelChoiceField(label=' Сотрундик -  нарушитель', queryset=Worker.objects.all(),
-                                    widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                 'placeholder': 'должность сотрудника в отношении кого справка'}))
 
-    amount = forms.FloatField(label='Сумма', widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': 'Сумма нарушения'}))
+    worker_act = forms.ModelChoiceField(label=' Сотрундик -  нарушитель', queryset=Worker.objects.all()
+                                    # ,widget=forms.Textarea(attrs={'class': 'form-control',
+                                    #                              'placeholder': 'должность сотрудника в отношении кого справка'})
+                                        )
+
+    employ_position_act = forms.ModelChoiceField(label='', queryset=Employ_position_act.objects.all(),
+                                    # widget=forms.Textarea(attrs={'class': 'form-control',
+                                    #                              'placeholder': ' Сутрудник нарушитель'})
+                                                 )
+
+    amount = forms.FloatField(label='Сумма', widget=forms.NumberInput(attrs={'placeholder': 'Сумма нарушения'}))
 
 
 # class Certificate_of_violations(models.Model):

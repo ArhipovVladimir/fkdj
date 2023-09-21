@@ -87,8 +87,8 @@ def add_violation(request):
             cer_vio_select = Certificate_of_violations.objects.filter(pk=cer_vio.pk).first()
             reestr = form.cleaned_data['reestr']
             title = form.cleaned_data['title']
-            employ_position_act = form.cleaned_data['employ_position_act']
             worker_act = form.cleaned_data['worker_act']
+            employ_position_act = form.cleaned_data['employ_position_act']
             amount = form.cleaned_data['amount']
             violation = Violation(certificate_of_violations=cer_vio_select ,reestr=reestr, title=title,
                                   employ_position_act=employ_position_act, worker_act=worker_act, amount=amount)

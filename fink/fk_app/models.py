@@ -89,7 +89,7 @@ class Worker(models.Model):
 
 
     def __str__(self):
-        return f'name: {self.name}, Emp_posit: {self.employ_position_contr}'
+        return f'name: {self.name}, Emp_posit: {self.employ_position}'
 
 # # работник
 # worker = sqlalchemy.Table(
