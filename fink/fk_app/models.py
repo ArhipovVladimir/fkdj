@@ -36,7 +36,7 @@ class Operation(models.Model):
 
     def __str__(self):
         # return f'code: {self.code_oper}, name: {self.name}'
-        return f'code_oper: {self.code_oper}, name: {self.name}'
+        return f' {self.code_oper} {self.name}'
 
 # # Операции
 # operation = sqlalchemy.Table(
@@ -141,7 +141,7 @@ class Method(models.Model):
 
 # Справка о нарушкении
 class Certificate_of_violations(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=False)
     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
 
 
@@ -170,7 +170,7 @@ class Reestr(models.Model):
     method = models.ForeignKey(Method, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f'oretation: {self.operation} employ_actint: {self.employ_actint}, method: {self.method}'
+        return f' {self.operation} {self.employ_actint} {self.method}'
 
 # Реестр
 # reestr = sqlalchemy.Table(
@@ -215,9 +215,10 @@ class Violation(models.Model):
 
 # Журнал
 class Journal(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=False)
     violation = models.ForeignKey(Violation, on_delete=models.PROTECT)
     measures = models.TextField(max_length=256)
+    content = models.TextField(max_length=256, default=None)
 
     def __str__(self):
         return f'date: {self.date}, volation{self.violation} measurse{self.measures}'

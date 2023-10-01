@@ -14,7 +14,7 @@
     </tr>
         {% for reest in reestr %}
     <tr align="center">
-        <td>{{ reest.operation.code_oper }}</td>
+        <td><a href="{% url 'add_volation_the' reest.operation.id %}" >{{ reest.operation.code_oper }}</a></td>
         <td>{{ reest.operation.name }}</td>
         <td>{{ reest.employ_contr.name }}</td>
         <td>{{ reest.employ_actint.name }}</td>

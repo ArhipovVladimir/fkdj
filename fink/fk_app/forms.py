@@ -79,19 +79,31 @@ class VolitionForm(forms.Form):
 
     amount = forms.FloatField(label='Сумма', widget=forms.NumberInput(attrs={'placeholder': 'Сумма нарушения'}))
 
+class VolitionFormThe(forms.Form):
+    certificate_of_violations = forms.ModelChoiceField(label='Справка', queryset=Certificate_of_violations.objects.all())
+    # reestr = forms.ModelChoiceField(label='Операция', queryset=Reestr.objects.all(),
+    #                                 # widget=forms.Textarea(attrs={'class': 'form-control',
+    #                                 #                              'placeholder': ' Операция с нарушением'})
+    #                                 )
+    title = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control',
+                                                 'placeholder': 'содержание нарушения'}))
 
-# class Certificate_of_violations(models.Model):
-#     date = models.DateField(auto_now_add=True)
-#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
-#
-#
-# class Violation(models.Model):
-#     certificate_of_violations = models.ForeignKey(Certificate_of_violations, on_delete=models.PROTECT)
-#     reestr = models.ForeignKey(Reestr, on_delete=models.PROTECT)
-#     title = models.TextField(max_length=256)
-#     employ_position_contr = models.ForeignKey(Employ_position_contr, on_delete=models.PROTECT)
-#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
-#     amount = models.FloatField(max_length=256)
+
+    worker_act = forms.ModelChoiceField(label=' Сотрудник -  нарушитель', queryset=Worker.objects.all()
+                                    # ,widget=forms.Textarea(attrs={'class': 'form-control',
+                                    #                              'placeholder': 'должность сотрудника в отношении кого справка'})
+                                        )
+
+    employ_position_act = forms.ModelChoiceField(label='', queryset=Employ_position_act.objects.all(),
+                                    # widget=forms.Textarea(attrs={'class': 'form-control',
+                                    #                              'placeholder': ' Сутрудник нарушитель'})
+                                                 )
+
+    amount = forms.FloatField(label='Сумма', widget=forms.NumberInput(attrs={'placeholder': 'Сумма нарушения'}))
+
+
+class VolitionFormUpdate(VolitionForm):
+    volitions = forms.ModelChoiceField(label='Нарушуния', queryset=Violation.objects.all())
 
 
 class RegViolationForm(forms.Form):
@@ -99,17 +111,22 @@ class RegViolationForm(forms.Form):
                            widget=forms.DateInput(attrs={'class': 'form-control',
                                                          'type': 'date'}))
     violations = forms.ModelChoiceField(label='нарушение', queryset=Violation.objects.filter(register=False))
+    content = forms.CharField(label='содержания нарушения', widget=forms.Textarea(attrs={'class': 'form-control',
+                                                 'placeholder': 'содержание наружения'}))
+    measures = forms.CharField(label='принятые меры', widget=forms.Textarea(attrs={'class': 'form-control',
+                                                 'placeholder': 'принятые меры'}))
+
+class UpdateRegViolationForm(forms.Form):
+    date = forms.DateField(initial=datetime.date.today,
+                           widget=forms.DateInput(attrs={'class': 'form-control',
+                                                         'type': 'date'}))
+    violations = forms.ModelChoiceField(label='нарушение', queryset=Violation.objects.filter(register=True))
+    content = forms.CharField(label='содержания нарушения', widget=forms.Textarea(attrs={'class': 'form-control',
+                                                 'placeholder': 'содержание наружения'}))
     measures = forms.CharField(label='принятые меры', widget=forms.Textarea(attrs={'class': 'form-control',
                                                  'placeholder': 'принятые меры'}))
 
 
-# class Journal(models.Model):
-#     date = models.DateField(auto_now_add=True)
-#     violation = models.ForeignKey(Violation, on_delete=models.PROTECT)
-#     measures = models.TextField(max_length=256)
-#
-#     def __str__(self):
-#         return f'date: {self.date}, volation{self.violation} measurse{self.measures}'
 
 class VolitionGetForm(forms.Form):
     certificate_of_violations = forms.ModelChoiceField(label='Справка', queryset=Certificate_of_violations.objects.all())

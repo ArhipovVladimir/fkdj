@@ -20,9 +20,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" object-ref="schemas/main/tables/fk_app_violation" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="e1ebe61b-5508-4391-b351-7da4ca0118a4" dataset="main.fk_app_certificate_of_violations" active-filter-id="EMPTY_FILTER" />
@@ -64,7 +62,7 @@
           <tns-folder value="" />
           <tns-profile value="" />
           <files>
-            <file path="$PROJECT_DIR$/fink/db.sqlite3" schema="main" />
+            <file path="C:\Users\arhip\OneDrive\Документы\GB\FKD\fink\db.sqlite3" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

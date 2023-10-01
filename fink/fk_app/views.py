@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Process, Operation, Reestr, Certificate_of_violations, Violation, Journal
 # from .models import Process
-from .forms import ProcessForm, OperatinForm, SertifForn, VolitionForm, RegViolationForm, VolitionGetForm
+from .forms import ProcessForm, OperatinForm, SertifForn, \
+    VolitionForm, RegViolationForm, VolitionGetForm, VolitionFormUpdate, UpdateRegViolationForm, VolitionFormThe
 import logging
 from django.core.files.storage import FileSystemStorage
 
@@ -102,6 +103,62 @@ def add_violation(request):
     return render(request, 'fk_app/add_object.html',
                   {'form': form, 'message': message, 'name': name})
 
+def add_violation_the(request, oper_id):
+    name = 'Регистрация строки в справку'
+    if request.method == 'POST':
+        form = VolitionFormThe(request.POST, request.FILES)
+        message = 'Ошибка в данных'
+        if form.is_valid():
+            cer_vio = form.cleaned_data['certificate_of_violations']
+            cer_vio_select = Certificate_of_violations.objects.filter(pk=cer_vio.pk).first()
+            reestr = Reestr.objects.filter(pk=oper_id).first()
+            title = form.cleaned_data['title']
+            worker_act = form.cleaned_data['worker_act']
+            employ_position_act = form.cleaned_data['employ_position_act']
+            amount = form.cleaned_data['amount']
+            violation = Violation(certificate_of_violations=cer_vio_select ,reestr=reestr, title=title,
+                                  employ_position_act=employ_position_act, worker=worker_act, amount=amount)
+            violation.save()
+            message = 'Сохранено'
+    else:
+        form = VolitionFormThe()
+        message = Reestr.objects.filter(pk=oper_id).first()
+
+    return render(request, 'fk_app/add_object.html',
+                  {'form': form, 'message': message.operation.name, 'name': name})
+
+
+# Изменеие строки нарушения
+def update_violation(request):
+    name = 'Изменение нарушения'
+    if request.method == 'POST':
+        form = VolitionFormUpdate(request.POST, request.FILES)
+        message = 'Ошибка в данных'
+        if form.is_valid():
+            volition = form.cleaned_data['volitions']
+            old_violation = Violation.objects.filter(pk=volition.pk).first()
+            old_violation.reestr = form.cleaned_data['reestr']
+            old_violation.title = form.cleaned_data['title']
+            old_violation.worker_act = form.cleaned_data['worker_act']
+            old_violation.employ_position_act = form.cleaned_data['employ_position_act']
+            old_violation.amount = form.cleaned_data['amount']
+            old_violation.save()
+            message = 'Нарушение изменено'
+    else:
+        form = VolitionFormUpdate()
+        message = 'Заполните форму'
+
+    return render(request, 'fk_app/add_object.html', {'form': form, 'message': message, 'name': name})
+
+
+# class Violation(models.Model):
+#     certificate_of_violations = models.ForeignKey(Certificate_of_violations, on_delete=models.PROTECT)
+#     reestr = models.ForeignKey(Reestr, on_delete=models.PROTECT)
+#     title = models.TextField(max_length=256)
+#     employ_position_act = models.ForeignKey(Employ_position_act, on_delete=models.PROTECT)
+#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
+#     amount = models.FloatField(max_length=256)
+#     register = models.BooleanField(default=False)
 
 def reg_violation_jurnal(request):
     name = 'Регистрация  нарушения в жупнал'
@@ -113,7 +170,8 @@ def reg_violation_jurnal(request):
             vio = form.cleaned_data['violations']
             vio_select = Violation.objects.filter(pk=vio.pk).first()
             measures = form.cleaned_data['measures']
-            journal = Journal(violation=vio_select, date=date, measures=measures)
+            content = form.cleaned_data['content']
+            journal = Journal(violation=vio_select, date=date, content=content, measures=measures)
             journal.save()
             vio_select.register = True
             vio_select.save()
@@ -125,6 +183,26 @@ def reg_violation_jurnal(request):
     return render(request, 'fk_app/add_object.html',
                   {'form': form, 'message': message, 'name': name})
 
+def update_reg_violation_jurnal(request):
+    name = 'изменение  нарушения в журнале'
+    if request.method == 'POST':
+        form = UpdateRegViolationForm(request.POST)
+        message = 'Ошибка в данных'
+        if form.is_valid():
+            vio = form.cleaned_data['violations']
+            date = form.cleaned_data['date']
+            vio_select = Violation.objects.filter(pk=vio.pk).first()
+            measures = form.cleaned_data['measures']
+            content = form.cleaned_data['content']
+            journal = Journal(violation=vio_select, date=date, content=content, measures=measures)
+            journal.save()
+            message = 'Сохранено'
+    else:
+        form = UpdateRegViolationForm()
+        message = 'Заполните форму'
+
+    return render(request, 'fk_app/add_object.html',
+                  {'form': form, 'message': message, 'name': name})
 
 def get_certif_all(request):
     violations = Violation.objects.all()
@@ -139,23 +217,34 @@ def get_certif_all(request):
     return render(request, "fk_app/certif.html", context)
 
 def get_sertif(request):
-    name = 'отображение справки'
+    name = 'Выберите справку'
     if request.method == 'POST':
         form = VolitionGetForm(request.POST, request.FILES)
-        message = 'Ошибка в данных'
+        # message = 'Ошибка в данных'
         if form.is_valid():
             cer_vio = form.cleaned_data['certificate_of_violations']
             cer_vio_select = Certificate_of_violations.objects.filter(pk=cer_vio.pk).first()
-            violations = Violation.objects.filter(pk=cer_vio_select).first()
-            # print(cer_vio_select)
+            name = cer_vio_select
+            violations_2 = Violation.objects.filter(certificate_of_violations__pk=cer_vio.pk)
+            print(cer_vio_select)
             message = 'Справка'
     else:
         form = VolitionGetForm()
-        message = 'Заполните форму'
+        # message = 'Заполните форму'
+        violations_2 = None
 
     return render(request, 'fk_app/certif_one.html',
-                  {'form': form, 'message': message, 'name': name, 'volits':violations})
+                {'form': form, 'name': name, 'volits':violations_2})
+                # {'form': form, 'message': message, 'name': name, 'volits':violations_2})
 
+
+def get_journal(request):
+    journal = Journal.objects.all()
+    print(journal)
+    context = {
+        "journals": journal
+    }
+    return render(request, "fk_app/journal.html", context)
 
 #
 # class Journal(models.Model):
@@ -166,6 +255,11 @@ def get_sertif(request):
 #     def __str__(self):
 #         return f'date: {self.date}, volation{self.violation} measurse{self.measures}'
 
+# class Certificate_of_violations(models.Model):
+#     date = models.DateField(auto_now_add=True)
+#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)
+#
+#
 
 
 

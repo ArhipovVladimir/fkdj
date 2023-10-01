@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}
+Журнал нарушений
+{% endblock %}
+{% block content %}
+<table>
+    <tr align="center">
+        <td>Дата поступления справки о выявленном недостатке и (или) нарушении</td>
+        <td>Идентификационный номер операции</td>
+        <td>Наименование операции</td>
+        <td>Содержание недостатка и (или) нарушения, выявленного в ходе контрольных действий</td>
+        <td>Сумма недостатка и (или) нарушения, рублей</td>
+        <td>Должностное лицо, ответственное за выполнение операции</td>
+        <td>Должностное лицо, ответственное за выполнение операции</td>
+        <td>Должностное лицо, осуществляющее контрольные действия</td>
+        <td>Должностное лицо, осуществляющее контрольные действия</td>
+        <td>Причины и обстоятельства возникновения недостатка и (или) нарушения</td>
+        <td>Принятые меры</td>
+    </tr>
+
+        {% for journal in journals %}
+
+    <tr align="center">
+        <td>{{ journal.date }}</td>
+        <td>{{ journal.violation.reestr.operation.code_oper }}</td>
+        <td>{{ journal.violation.reestr.operation.name }}</td>
+        <td>{{ journal.content }}</td>
+        <td>{{ journal.violation.amount }}</td>
+        <td>{{ journal.violation.employ_position_act.name }}</td>
+        <td>{{ journal.violation.worker.name }}</td>
+        <td>{{ journal.violation.certificate_of_violations.worker.employ_position }}</td>
+        <td>{{ journal.violation.certificate_of_violations.worker.name }}</td>
+        <td>{{ journal.violation.title }}</td>
+        <td>{{ journal.measures }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}
+
+<!--# class Journal(models.Model):-->
+<!--#     date = models.DateField(auto_now_add=True)-->
+<!--#     violation = models.ForeignKey(Violation, on_delete=models.PROTECT)-->
+<!--#     measures = models.TextField(max_length=256)-->
+<!--#-->
+<!--#     def __str__(self):-->
+<!--#         return f'date: {self.date}, volation{self.violation} measurse{self.measures}'-->
+
+<!--# class Certificate_of_violations(models.Model):-->
+<!--#     date = models.DateField(auto_now_add=True)-->
+<!--#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)-->
+<!--#-->
+<!--#-->
+<!--# class Violation(models.Model):-->
+<!--#     certificate_of_violations = models.ForeignKey(Certificate_of_violations, on_delete=models.PROTECT)-->
+<!--#     reestr = models.ForeignKey(Reestr, on_delete=models.PROTECT)-->
+<!--#     title = models.TextField(max_length=256)-->
+<!--#     employ_position_contr = models.ForeignKey(Employ_position_contr, on_delete=models.PROTECT)-->
+<!--#     worker = models.ForeignKey(Worker, on_delete=models.PROTECT)-->
+<!--#     amount = models.FloatField(max_length=256)-->
